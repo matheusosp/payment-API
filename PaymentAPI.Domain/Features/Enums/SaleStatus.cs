@@ -1,4 +1,4 @@
-﻿namespace payment_api.Entities.Enums
+﻿namespace PaymentAPI.Domain.Features.Enums
 {
     public enum SaleStatus
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace payment_api.Entities
+namespace PaymentAPI.Domain.Features
 {
     public class Item
     {

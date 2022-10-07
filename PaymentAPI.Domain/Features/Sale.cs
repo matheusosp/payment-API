@@ -1,6 +1,6 @@
-﻿using payment_api.Entities.Enums;
+﻿using PaymentAPI.Domain.Features.Enums;
 
-namespace payment_api.Entities
+namespace PaymentAPI.Domain.Features
 {
     public class Sale
     {
