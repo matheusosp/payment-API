@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using payment_api.Context;
+using PaymentAPI.Application.Commands;
 using PaymentAPI.Domain.Features;
 using PaymentAPI.Domain.Features.Enums;
 
@@ -20,7 +21,7 @@ namespace payment_api.Controllers
 
         // GET api/<SaleController>/5
         [HttpGet("{id}")]
-        public IActionResult GetById(long id)
+        public IActionResult RetrieveSaleById(long id)
         {
             var sale = _context.Sales.Find(id);
 
@@ -32,9 +33,8 @@ namespace payment_api.Controllers
 
         // POST api/<SaleController>
         [HttpPost]
-        public IActionResult Create(Sale sale)
+        public IActionResult RegisterSale(RegisterSaleCommand sale)
         {
-            sale.Status = SaleStatus.AwaitingPayment;
             _context.Add(sale);
             _context.SaveChanges();
             return Ok(sale);
