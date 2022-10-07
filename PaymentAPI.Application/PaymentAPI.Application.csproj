@@ -7,11 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.34.3" />
     <PackageReference Include="FluentValidation" Version="11.2.2" />
+    <PackageReference Include="MediatR" Version="11.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PaymentAPI.Domain\PaymentAPI.Domain.csproj" />
+    <ProjectReference Include="..\PaymentAPI.Infra.EF\PaymentAPI.Infra.EF.csproj" />
   </ItemGroup>
 
 </Project>
