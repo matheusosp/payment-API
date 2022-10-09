@@ -51,26 +51,26 @@ namespace PaymentAPI.Infra.EF.Migrations
                 {
                     ItemId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SaleId = table.Column<int>(type: "int", nullable: false),
+                    SaleId = table.Column<long>(type: "bigint", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    SaleId1 = table.Column<long>(type: "bigint", nullable: true)
+                    Quantity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Items", x => x.ItemId);
                     table.ForeignKey(
-                        name: "FK_Items_Sales_SaleId1",
-                        column: x => x.SaleId1,
+                        name: "FK_Items_Sales_SaleId",
+                        column: x => x.SaleId,
                         principalTable: "Sales",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Items_SaleId1",
+                name: "IX_Items_SaleId",
                 table: "Items",
-                column: "SaleId1");
+                column: "SaleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sales_SellerId",

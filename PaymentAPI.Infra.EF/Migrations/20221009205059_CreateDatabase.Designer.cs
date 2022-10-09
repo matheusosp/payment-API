@@ -12,7 +12,7 @@ using PaymentAPI.Infra.EF.Context;
 namespace PaymentAPI.Infra.EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221009142527_CreateDatabase")]
+    [Migration("20221009205059_CreateDatabase")]
     partial class CreateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,15 +41,12 @@ namespace PaymentAPI.Infra.EF.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("SaleId")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("SaleId1")
+                    b.Property<long>("SaleId")
                         .HasColumnType("bigint");
 
                     b.HasKey("ItemId");
 
-                    b.HasIndex("SaleId1");
+                    b.HasIndex("SaleId");
 
                     b.ToTable("Items");
                 });
@@ -107,7 +104,9 @@ namespace PaymentAPI.Infra.EF.Migrations
                 {
                     b.HasOne("PaymentAPI.Domain.Features.Sale", null)
                         .WithMany("Items")
-                        .HasForeignKey("SaleId1");
+                        .HasForeignKey("SaleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PaymentAPI.Domain.Features.Sale", b =>

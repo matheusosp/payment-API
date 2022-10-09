@@ -11,5 +11,6 @@ namespace PaymentAPI.Domain.Interfaces
     {
         Sale Add(Sale sale);
         Sale GetById(long id);
+        Sale UpdateSaleById(Sale sale);
     }
 }

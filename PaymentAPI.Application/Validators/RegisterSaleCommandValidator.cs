@@ -16,6 +16,7 @@ namespace PaymentAPI.Application.Validators
                 .NotEmpty();
 
             RuleFor(c => c.Seller).SetValidator(new SellerValidator());
+            RuleFor(c => c.Items.Count).GreaterThan(0).WithMessage("A venda tem que ter pelo menos 1 item.");
             RuleForEach(c => c.Items).SetValidator(new ItemValidator());
         }
     }

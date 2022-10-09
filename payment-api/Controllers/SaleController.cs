@@ -47,24 +47,16 @@ namespace payment_api.Controllers
         }
 
         // PUT api/<SaleController>/5
-        //[HttpPut("{id}")]
-        //public IActionResult UpdateById(int id, Sale sale)
-        //{
-        //    var saleDatabase = _context.Sales.Find(id);
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateById(long id, [FromBody] UpdateSaleCommand command, CancellationToken cancellationToken)
+        {
+            command.Id = id;
+            var result = await _mediator.Send(command, cancellationToken);
+            if (result.IsFailure)
+                return BadRequest(result.Error);
 
-        //    if (saleDatabase == null)
-        //        return NotFound();
-
-        //    saleDatabase.Status = sale.Status;
-        //    saleDatabase.Seller = sale.Seller;
-        //    saleDatabase.Items = sale.Items;
-        //    saleDatabase.Date = sale.Date;
-
-        //    _context.Update(saleDatabase);
-        //    _context.SaveChanges();
-
-        //    return Ok(saleDatabase);
-        //}
+            return StatusCode(200, result.Value);
+        }
 
     }
 }

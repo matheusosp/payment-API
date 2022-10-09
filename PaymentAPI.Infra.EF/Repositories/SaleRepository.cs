@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
 using PaymentAPI.Domain.Features;
 using PaymentAPI.Domain.Interfaces;
 using PaymentAPI.Infra.EF.Context;
@@ -8,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace PaymentAPI.Infra.EF.Repositories
 {
@@ -26,6 +29,28 @@ namespace PaymentAPI.Infra.EF.Repositories
         public Sale GetById(long id)
         {
             return Context.Sales.Include(s => s.Seller).Include(s => s.Items).FirstOrDefault(e => e.Id == id);
+        }
+
+        public Sale UpdateSaleById(Sale sale)
+        {
+            var databaseSale = Context.Sales
+                .Include(s => s.Seller)
+                .Include(s => s.Items)
+                .FirstOrDefault(e => e.Id == sale.Id);
+
+            Context.Items.RemoveRange(databaseSale.Items);
+            Context.Items.AddRange(sale.Items);
+
+            databaseSale.Seller.Name = sale.Seller.Name;
+            databaseSale.Seller.Phone = sale.Seller.Phone;
+            databaseSale.Seller.CPF = sale.Seller.CPF;
+            databaseSale.Seller.Email = sale.Seller.Email;
+            databaseSale.Status = sale.Status;
+            databaseSale.Date = sale.Date;
+
+            Context.Entry(databaseSale).State = EntityState.Modified;
+            Context.SaveChanges();
+            return sale;
         }
     }
 }
