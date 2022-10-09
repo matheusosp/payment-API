@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace PaymentAPI.Domain.Contracts
+namespace PaymentAPI.Domain.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {

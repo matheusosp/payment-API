@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutoMapper;
+using PaymentAPI.Domain.Features;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,4 +14,5 @@ namespace PaymentAPI.Domain.Contracts
         public decimal Price { get; set; }
         public int Quantity { get; set; }
     }
+
 }

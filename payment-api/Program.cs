@@ -1,8 +1,8 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using PaymentAPI.Application.Commands;
-using PaymentAPI.Domain.Contracts;
 using PaymentAPI.Domain.Features;
+using PaymentAPI.Domain.Interfaces;
 using PaymentAPI.Infra.EF;
 using PaymentAPI.Infra.EF.Context;
 using PaymentAPI.Infra.EF.Repositories;
@@ -17,6 +17,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ISaleRepository, SaleRepository>();
 builder.Services.AddMediatR(typeof(RegisterSaleCommand));
+builder.Services.AddAutoMapper(typeof(RegisterSaleCommand));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -1,6 +1,12 @@
-﻿using MediatR;
+﻿using FluentValidation.Results;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PaymentAPI.Application.Commands;
+using System.ComponentModel.DataAnnotations;
+using System.Net;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using System.Threading;
+using PaymentAPI.Application.Queries;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,23 +23,27 @@ namespace payment_api.Controllers
             _mediator = mediator;
         }
         // GET api/<SaleController>/5
-        //[HttpGet("{id}")]
-        //public IActionResult RetrieveSaleById(long id)
-        //{
-        //    var sale = _context.Sales.Find(id);
+        [HttpGet("{id}")]
+        public async Task<IActionResult> RetrieveSaleById(long id, CancellationToken cancellationToken)
+        {
+            var query = new RetrieveSaleByIdQuery(id);
+            var result = await _mediator.Send(query, cancellationToken);
 
-        //    if (sale == null)
-        //        return NotFound();
+            if (result.IsFailure)
+                return NotFound();
 
-        //    return Ok(sale);
-        //}
+            return Ok(result.Value);
+        }
 
         // POST api/<SaleController>
         [HttpPost]
         public async Task<IActionResult> RegisterSale(RegisterSaleCommand command, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(command, cancellationToken);
-            return Ok(result.Value);
+            if (result.IsFailure)
+                return BadRequest(result.Error);
+
+            return StatusCode(201, result.Value);
         }
 
         // PUT api/<SaleController>/5
@@ -55,9 +65,6 @@ namespace payment_api.Controllers
 
         //    return Ok(saleDatabase);
         //}
-        protected OkObjectResult HandleCallback<TSuccess>(TSuccess data)
-        {
-            return Ok(data);
-        }
+
     }
 }

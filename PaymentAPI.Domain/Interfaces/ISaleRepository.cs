@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PaymentAPI.Domain.Contracts
+namespace PaymentAPI.Domain.Interfaces
 {
     public interface ISaleRepository
     {
         Sale Add(Sale sale);
+        Sale GetById(long id);
     }
 }

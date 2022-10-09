@@ -1,4 +1,4 @@
-﻿using PaymentAPI.Domain.Contracts;
+﻿using PaymentAPI.Domain.Interfaces;
 using PaymentAPI.Infra.EF.Context;
 using System;
 using System.Collections.Generic;
