@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using PaymentAPI.Domain.Contracts;
 using PaymentAPI.Domain.Features;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PaymentAPI.Application.Validators
 {
-    public class ItemValidator : AbstractValidator<Item>
+    public class ItemValidator : AbstractValidator<ItemRequest>
     {
         public ItemValidator()
         {
