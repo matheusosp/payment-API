@@ -14,16 +14,15 @@ namespace PaymentAPI.Application.Validators
         public ItemValidator()
         {
             RuleFor(c => c.Name)
-                .NotEmpty().WithMessage("A propriedade {PropertyName} deve estar preenchida.")
-                .Length(2, 20).WithMessage("{PropertyName} deve ter entre {MinLength} e {MaxLength} caracteres");
+                .NotEmpty().WithMessage("Propriedade {PropertyName} do item deve estar preenchida.")
+                .Length(2, 20).WithMessage("{PropertyName} do item deve ter entre {MinLength} e {MaxLength} caracteres");
 
             RuleFor(c => c.Price)
-                .NotEmpty().WithMessage("A propriedade {PropertyName} deve estar preenchida.")
-                .GreaterThanOrEqualTo(0).WithMessage("A propriedade {PropertyName} deve ser maior ou igual a 0.");
+                .NotEmpty().WithMessage("Propriedade {PropertyName} do item deve estar preenchida.")
+                .GreaterThanOrEqualTo(0).WithMessage("Propriedade {PropertyName} do item deve ser maior ou igual a 0.");
 
             RuleFor(c => c.Quantity)
-                .NotEmpty().WithMessage("A propriedade {PropertyName} deve estar preenchida.")
-                .GreaterThan(0).WithMessage("A propriedade {PropertyName} deve ser maior que 0."); ;
+                .GreaterThan(0).WithMessage("Propriedade {PropertyName} do item deve estar preenchida e ser maior que 0."); ;
         }
     }
 }

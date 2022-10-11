@@ -1,18 +1,12 @@
 ﻿using AutoMapper;
 using CSharpFunctionalExtensions;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PaymentAPI.Application.Validators;
 using PaymentAPI.Domain.Contracts;
 using PaymentAPI.Domain.Features;
 using PaymentAPI.Domain.Features.Enums;
 using PaymentAPI.Domain.Interfaces;
-using PaymentAPI.Infra.EF.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace PaymentAPI.Application.Commands
 {
@@ -66,7 +60,7 @@ namespace PaymentAPI.Application.Commands
 
             var sale = _mapper.Map<Sale>(request);
             sale.Status = SaleStatus.AwaitingPayment;
-            _saleRepository.Add(sale);
+            sale = _saleRepository.Add(sale);
             
             await _unitOfWork.CommitAsync();
 

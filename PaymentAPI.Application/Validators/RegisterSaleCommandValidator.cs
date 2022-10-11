@@ -13,11 +13,12 @@ namespace PaymentAPI.Application.Validators
         public RegisterSaleCommandValidator()
         {
             RuleFor(x => x.Date)
-                .NotEmpty();
+                .NotEmpty().WithMessage("A venda deve ter uma data");
 
-            RuleFor(c => c.Seller).SetValidator(new SellerValidator());
-            RuleFor(c => c.Items.Count).GreaterThan(0).WithMessage("A venda tem que ter pelo menos 1 item.");
-            RuleForEach(c => c.Items).SetValidator(new ItemValidator());
+            RuleFor(c => c.Seller).NotEmpty().WithMessage("A venda deve ter um vendedor")
+                .SetValidator(new SellerValidator());
+            RuleFor(c => c.Items).NotEmpty().WithMessage("A venda tem que ter pelo menos 1 item.");
+            RuleForEach(c => c.Items).NotEmpty().SetValidator(new ItemValidator());
         }
     }
 }

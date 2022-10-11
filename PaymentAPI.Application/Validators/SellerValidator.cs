@@ -15,18 +15,18 @@ namespace PaymentAPI.Application.Validators
         public SellerValidator()
         {
             RuleFor(c => c.Name)
-                .NotEmpty().WithMessage("A propriedade {PropertyName} deve estar preenchida.")
-                .Length(2, 20).WithMessage("{PropertyName} deve ter entre {MinLength} e {MaxLength} caracteres");
+                .NotEmpty().WithMessage("A propriedade {PropertyName} do vendedor deve estar preenchida.")
+                .Length(2, 20).WithMessage("{PropertyName} do vendedor deve ter entre {MinLength} e {MaxLength} caracteres");
 
             RuleFor(c => c.Email)
-                .NotEmpty().EmailAddress().WithMessage("{PropertyName} deve conter um email válido")
-                .MaximumLength(20).WithMessage("{PropertyName} deve conter no máximo {MaxLength} caracteres");
+                .NotEmpty().WithMessage("A propriedade {PropertyName} do vendedor deve estar preenchida.")
+                .EmailAddress().WithMessage("{PropertyName} do vendedor deve conter um email válido");
 
             RuleFor(x => x.Phone)
-                .NotEmpty().WithMessage("{PropertyName} deve ser preenchida.");
+                .NotEmpty().WithMessage("{PropertyName} do vendedor deve ser preenchido.");
 
             RuleFor(x => x.CPF)
-                .NotEmpty().WithMessage("{PropertyName} deve ser preenchida.");
+                .NotEmpty().WithMessage("{PropertyName} do vendedor deve ser preenchido.");
         }
     }
 }
