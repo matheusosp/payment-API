@@ -53,16 +53,19 @@ namespace PaymentAPI.Application.Commands
 
             var result = validator.Validate(request);
             var errors = new List<string>();
+            var sale = _mapper.Map<Sale>(request);
             if (result.IsValid == false)
             {
                 errors.AddRange(result.Errors.Select(p => p.ErrorMessage));
             }
+            else 
+            {
+                
+                sale.Status = SaleStatus.AwaitingPayment;
+                sale = _saleRepository.Add(sale);
 
-            var sale = _mapper.Map<Sale>(request);
-            sale.Status = SaleStatus.AwaitingPayment;
-            sale = _saleRepository.Add(sale);
-            
-            await _unitOfWork.CommitAsync();
+                await _unitOfWork.CommitAsync();
+            }
 
             return Result.SuccessIf(result.IsValid,sale,string.Join('\n', errors));
         }

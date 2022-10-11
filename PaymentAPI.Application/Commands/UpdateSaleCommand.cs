@@ -64,21 +64,23 @@ namespace PaymentAPI.Application.Commands
             var result = validator.Validate(request);
 
             var errors = new List<string>();
+            var sale = _mapper.Map<Sale>(request);
             if (result.IsValid == false)
             {
                 errors.AddRange(result.Errors.Select(p => p.ErrorMessage));
             }
-
-            var sale = _mapper.Map<Sale>(request);
-            sale.Seller.SellerId = databaseSale.Seller.SellerId;
-            foreach (var item in sale.Items)
+            else
             {
-                item.SaleId = databaseSale.Id;
+                sale.Seller.SellerId = databaseSale.Seller.SellerId;
+                foreach (var item in sale.Items)
+                {
+                    item.SaleId = databaseSale.Id;
+                }
+                _saleRepository.UpdateSaleById(sale);
+
+                await _unitOfWork.CommitAsync();
             }
-            _saleRepository.UpdateSaleById(sale);
-
-            await _unitOfWork.CommitAsync();
-
+            
             return Result.SuccessIf(result.IsValid, sale, string.Join('\n', errors));
         }
     }
