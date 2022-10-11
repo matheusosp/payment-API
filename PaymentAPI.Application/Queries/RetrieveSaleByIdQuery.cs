@@ -26,12 +26,10 @@ namespace PaymentAPI.Application.Queries
     public class RetrieveSaleByIdQueryHandler : IRequestHandler<RetrieveSaleByIdQuery, Result<Sale>>
     {
         private readonly ISaleRepository _saleRepository;
-        private readonly IMapper _mapper;
 
-        public RetrieveSaleByIdQueryHandler(ISaleRepository saleRepository, IMapper mapper)
+        public RetrieveSaleByIdQueryHandler(ISaleRepository saleRepository)
         {
             _saleRepository = saleRepository;
-            _mapper = mapper;
         }
 
         public Task<Result<Sale>> Handle(RetrieveSaleByIdQuery request, CancellationToken cancellationToken)
