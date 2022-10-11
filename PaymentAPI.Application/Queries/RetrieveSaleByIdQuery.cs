@@ -43,7 +43,7 @@ namespace PaymentAPI.Application.Queries
                 return Task.FromResult(Result.Failure<Sale>("Id Não encontrado"));
             }
 
-            return Task.FromResult(Result.Success(_mapper.Map<Sale>(sale)));
+            return Task.FromResult(Result.Success(sale));
         }
     }
 }
