@@ -17,7 +17,7 @@ namespace PaymentAPI.Infra.EF.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.9")
+                .HasAnnotation("ProductVersion", "6.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -60,8 +60,8 @@ namespace PaymentAPI.Infra.EF.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("SellerId")
-                        .HasColumnType("int");
+                    b.Property<long?>("SellerId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -75,11 +75,11 @@ namespace PaymentAPI.Infra.EF.Migrations
 
             modelBuilder.Entity("PaymentAPI.Domain.Features.Seller", b =>
                 {
-                    b.Property<int>("SellerId")
+                    b.Property<long>("SellerId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SellerId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("SellerId"), 1L, 1);
 
                     b.Property<int>("CPF")
                         .HasColumnType("int");

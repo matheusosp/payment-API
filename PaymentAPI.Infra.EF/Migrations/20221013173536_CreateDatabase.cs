@@ -13,7 +13,7 @@ namespace PaymentAPI.Infra.EF.Migrations
                 name: "Sellers",
                 columns: table => new
                 {
-                    SellerId = table.Column<int>(type: "int", nullable: false)
+                    SellerId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CPF = table.Column<int>(type: "int", nullable: false),
@@ -31,7 +31,7 @@ namespace PaymentAPI.Infra.EF.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SellerId = table.Column<int>(type: "int", nullable: true),
+                    SellerId = table.Column<long>(type: "bigint", nullable: true),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false)
                 },

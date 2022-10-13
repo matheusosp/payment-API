@@ -31,24 +31,23 @@ namespace PaymentAPI.Infra.EF.Repositories
             return Context.Sales.Include(s => s.Seller).Include(s => s.Items).FirstOrDefault(e => e.Id == id);
         }
 
-        public Sale UpdateSaleById(Sale sale)
+        public Sale UpdateSaleById(Sale sale, Sale databaseSale)
         {
-            var databaseSale = Context.Sales
-                .Include(s => s.Seller)
-                .Include(s => s.Items)
-                .FirstOrDefault(e => e.Id == sale.Id);
-
+            //Atualizando Itens
             Context.Items.RemoveRange(databaseSale.Items);
             Context.Items.AddRange(sale.Items);
 
+            //Atualizando Seller
             databaseSale.Seller.Name = sale.Seller.Name;
             databaseSale.Seller.Phone = sale.Seller.Phone;
             databaseSale.Seller.CPF = sale.Seller.CPF;
             databaseSale.Seller.Email = sale.Seller.Email;
+
+            //Atualizando Sale
             databaseSale.Status = sale.Status;
             databaseSale.Date = sale.Date;
-
             Context.Entry(databaseSale).State = EntityState.Modified;
+
             Context.SaveChanges();
             return sale;
         }

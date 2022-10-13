@@ -16,24 +16,7 @@ namespace PaymentAPI.Application.Commands
         public DateTime Date { get; set; }
         public ICollection<ItemRequest> Items { get; set; }
     }
-    public class RegisterSaleCommandMapping : Profile
-    {
-        public RegisterSaleCommandMapping()
-        {
-            CreateMap<RegisterSaleCommand, Sale>()
-                .ForMember(m => m.Date, opts => opts.MapFrom(src => src.Date));
 
-            CreateMap<ItemRequest, Item>()
-                .ForMember(m => m.Quantity, opts => opts.MapFrom(src => src.Quantity))
-                .ForMember(m => m.Name, opts => opts.MapFrom(src => src.Name))
-                .ForMember(m => m.Price, opts => opts.MapFrom(src => src.Price));
-
-            CreateMap<SellerRequest, Seller>()
-                .ForMember(m => m.Email, opts => opts.MapFrom(src => src.Email))
-                .ForMember(m => m.Name, opts => opts.MapFrom(src => src.Name))
-                .ForMember(m => m.Phone, opts => opts.MapFrom(src => src.Phone));
-        }
-    }
     public class RegisterSaleCommandHandler:IRequestHandler<RegisterSaleCommand, Result<Sale>>
     {
         private readonly ISaleRepository _saleRepository;
