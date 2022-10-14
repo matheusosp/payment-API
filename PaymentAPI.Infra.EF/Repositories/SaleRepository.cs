@@ -28,25 +28,15 @@ namespace PaymentAPI.Infra.EF.Repositories
         }
         public Sale GetById(long id)
         {
-            return Context.Sales.Include(s => s.Seller).Include(s => s.Items).FirstOrDefault(e => e.Id == id);
+            return Context.Sales.AsNoTracking().Include(s => s.Seller).Include(s => s.Items).FirstOrDefault(e => e.Id == id);
         }
 
         public Sale UpdateSaleById(Sale sale, Sale databaseSale)
         {
-            //Atualizando Itens
+            //Atualizar Itens
             Context.Items.RemoveRange(databaseSale.Items);
-            Context.Items.AddRange(sale.Items);
 
-            //Atualizando Seller
-            databaseSale.Seller.Name = sale.Seller.Name;
-            databaseSale.Seller.Phone = sale.Seller.Phone;
-            databaseSale.Seller.CPF = sale.Seller.CPF;
-            databaseSale.Seller.Email = sale.Seller.Email;
-
-            //Atualizando Sale
-            databaseSale.Status = sale.Status;
-            databaseSale.Date = sale.Date;
-            Context.Entry(databaseSale).State = EntityState.Modified;
+            Context.Sales.Update(sale);
 
             Context.SaveChanges();
             return sale;
