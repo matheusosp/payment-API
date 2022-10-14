@@ -17,11 +17,18 @@ namespace PaymentAPI.Application.Commands
 
             CreateMap<UpdateSaleCommand, Sale>()
                 .AfterMap((src, dest) => {
-                    dest.Seller.SellerId = src.Id;
-                    foreach (var item in dest.Items)
+                    if (dest.Seller != null) 
                     {
-                        item.SaleId = src.Id;
+                        dest.Seller.SellerId = src.Id;
                     }
+                    if (dest.Items != null && dest.Items.Count > 0) 
+                    {
+                        foreach (var item in dest.Items)
+                        {
+                            item.SaleId = src.Id;
+                        }
+                    }
+
                 });
 
             CreateMap<ItemRequest, Item>();

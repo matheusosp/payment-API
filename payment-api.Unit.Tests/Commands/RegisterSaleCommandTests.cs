@@ -26,7 +26,7 @@ namespace payment_api.Unit.Tests.Commands
         public void SetUp()
         {
             _moqUnitOfWork = new Mock<IUnitOfWork>(MockBehavior.Default);
-            _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new RegisterSaleCommandMapping())));
+            _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new MappingProfile())));
             _moqSaleRepository = new Mock<ISaleRepository>(MockBehavior.Default);
         }
 

@@ -25,7 +25,7 @@ namespace payment_api.Unit.Tests.Commands
         public void SetUp()
         {
             _moqUnitOfWork = new Mock<IUnitOfWork>(MockBehavior.Default);
-            _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new UpdateSaleCommandMapping())));
+            _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new MappingProfile())));
             _moqSaleRepository = new Mock<ISaleRepository>(MockBehavior.Default);
         }
         [Test]
@@ -54,7 +54,7 @@ namespace payment_api.Unit.Tests.Commands
             };
             var sale = _mapper.Map<Sale>(command);
             _moqSaleRepository.Setup(s => s.GetById(It.IsAny<long>())).Returns(sale);
-            _moqSaleRepository.Setup(s => s.UpdateSaleById(It.IsAny<Sale>())).Returns(sale);
+            _moqSaleRepository.Setup(s => s.UpdateSaleById(It.IsAny<Sale>(), It.IsAny<Sale>())).Returns(sale);
 
             // Act
             var result = await GetCommand().Handle(command, default);
@@ -71,7 +71,7 @@ namespace payment_api.Unit.Tests.Commands
             var sale = _mapper.Map<Sale>(command);
             sale.Status = currentStatus;
             _moqSaleRepository.Setup(s => s.GetById(It.IsAny<long>())).Returns(sale);
-            _moqSaleRepository.Setup(s => s.UpdateSaleById(It.IsAny<Sale>())).Returns(sale);
+            _moqSaleRepository.Setup(s => s.UpdateSaleById(It.IsAny<Sale>(), It.IsAny<Sale>())).Returns(sale);
 
             // Act
             var result = await GetCommand().Handle(command, default);
@@ -88,7 +88,7 @@ namespace payment_api.Unit.Tests.Commands
             var sale = _mapper.Map<Sale>(command);
             sale.Status = currentStatus;
             _moqSaleRepository.Setup(s => s.GetById(It.IsAny<long>())).Returns(sale);
-            _moqSaleRepository.Setup(s => s.UpdateSaleById(It.IsAny<Sale>())).Returns(sale);
+            _moqSaleRepository.Setup(s => s.UpdateSaleById(It.IsAny<Sale>(), It.IsAny<Sale>())).Returns(sale);
 
             // Act
             var result = await GetCommand().Handle(command, default);
@@ -115,7 +115,7 @@ namespace payment_api.Unit.Tests.Commands
             };
             var sale = _mapper.Map<Sale>(command);
             _moqSaleRepository.Setup(s => s.GetById(It.IsAny<long>())).Returns(sale);
-            _moqSaleRepository.Setup(s => s.UpdateSaleById(It.IsAny<Sale>())).Returns(sale);
+            _moqSaleRepository.Setup(s => s.UpdateSaleById(It.IsAny<Sale>(), It.IsAny<Sale>())).Returns(sale);
 
             // Act
             var result = await GetCommand().Handle(command, default);
@@ -143,7 +143,7 @@ namespace payment_api.Unit.Tests.Commands
             };
             var sale = _mapper.Map<Sale>(command);
             _moqSaleRepository.Setup(s => s.GetById(It.IsAny<long>())).Returns(sale);
-            _moqSaleRepository.Setup(s => s.UpdateSaleById(It.IsAny<Sale>())).Returns(sale);            
+            _moqSaleRepository.Setup(s => s.UpdateSaleById(It.IsAny<Sale>(), It.IsAny<Sale>())).Returns(sale);            
 
             // Act
             var result = await GetCommand().Handle(command, default);
@@ -177,7 +177,7 @@ namespace payment_api.Unit.Tests.Commands
             };
             var sale = _mapper.Map<Sale>(command);
             _moqSaleRepository.Setup(s => s.GetById(It.IsAny<long>())).Returns(sale);
-            _moqSaleRepository.Setup(s => s.UpdateSaleById(It.IsAny<Sale>())).Returns(sale);            
+            _moqSaleRepository.Setup(s => s.UpdateSaleById(It.IsAny<Sale>(), It.IsAny<Sale>())).Returns(sale);            
 
             // Act
             var result = await GetCommand().Handle(command, default);
@@ -195,7 +195,7 @@ namespace payment_api.Unit.Tests.Commands
             // Arrange
             var sale = _mapper.Map<Sale>(command);
             _moqSaleRepository.Setup(s => s.GetById(It.IsAny<long>())).Returns(sale);
-            _moqSaleRepository.Setup(s => s.UpdateSaleById(It.IsAny<Sale>())).Returns(sale);            
+            _moqSaleRepository.Setup(s => s.UpdateSaleById(It.IsAny<Sale>(), It.IsAny<Sale>())).Returns(sale);            
 
             // Act
             var result = await GetCommand().Handle(command, default);
