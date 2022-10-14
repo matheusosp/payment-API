@@ -17,7 +17,12 @@ namespace payment_api.Controllers
         {
             _mediator = mediator;
         }
-        // GET api/<SaleController>/5
+
+        /// <summary>
+        /// Operação para pegar uma única venda da base de dados.
+        /// </summary>
+        /// <param name="id">Código identificador da venda</param>
+        /// <returns>Um objeto de venda</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> RetrieveSaleById(long id, CancellationToken cancellationToken)
         {
@@ -30,7 +35,11 @@ namespace payment_api.Controllers
             return Ok(result.Value);
         }
 
-        // POST api/<SaleController>
+        /// <summary>
+        /// Operação que realiza o cadastro da venda
+        /// </summary>
+        /// <param name="palavra">Um objeto de venda</param>
+        /// <returns>Um objeto de venda com seu Id</returns>
         [HttpPost]
         public async Task<IActionResult> RegisterSale(RegisterSaleCommand command, CancellationToken cancellationToken)
         {
@@ -41,7 +50,12 @@ namespace payment_api.Controllers
             return StatusCode(201, result.Value);
         }
 
-        // PUT api/<SaleController>/5
+        /// <summary>
+        /// Operação que realiza a substituição de dados de uma venda especifica.
+        /// </summary>
+        /// <param name="id">Código identificador da venda a ser alterada</param>
+        /// <param name="palavra">Objeto venda com dados para alteração</param>
+        /// <returns>Um objeto de venda com seu Id</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateById(long id, [FromBody] UpdateSaleCommand command, CancellationToken cancellationToken)
         {

@@ -1,6 +1,7 @@
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.PlatformAbstractions;
 using PaymentAPI.Application.Commands;
 using PaymentAPI.Application.Mapping;
 using PaymentAPI.Application.Queries;
@@ -36,7 +37,13 @@ builder.Services.AddAutoMapper(typeof(AutoMapperInitializer));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(cfg => {
+    var pathProject = PlatformServices.Default.Application.ApplicationBasePath; ;
+    var nameProject = $"{PlatformServices.Default.Application.ApplicationName}.xml";
+    var PathXmlFile = Path.Combine(pathProject, nameProject);
+
+    cfg.IncludeXmlComments(PathXmlFile);
+});
 
 var app = builder.Build();
 
