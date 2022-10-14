@@ -17,7 +17,8 @@ namespace PaymentAPI.Application.Validators
         {
             RuleFor(x => x.Date)
                 .NotEmpty().WithMessage("A venda deve ter uma data");
-            RuleFor(c => c.Status).NotNull().Must((c, status) => CanChangeStatus(dataBaseStatus, status)).WithMessage("O Status não pode ser alterado");
+            RuleFor(c => c.Status).IsInEnum().WithMessage("O Status não pode ser 0 ou vazio")
+                .Must((c, status) => CanChangeStatus(dataBaseStatus, status)).WithMessage("O Status não pode ser alterado").When(c => c.Status > 0,ApplyConditionTo.CurrentValidator);
 
             RuleFor(c => c.Seller).NotEmpty().WithMessage("A venda deve ter um vendedor")
                 .SetValidator(new SellerValidator());

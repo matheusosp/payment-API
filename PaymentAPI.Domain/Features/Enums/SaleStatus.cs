@@ -2,10 +2,10 @@
 {
     public enum SaleStatus
     {
-        AwaitingPayment,
-        ApprovedPayment,
-        SentToCarrier,
-        Delivered,
-        Canceled
+        AwaitingPayment = 1,
+        ApprovedPayment = 2,
+        SentToCarrier = 3,
+        Delivered = 4,
+        Canceled = 5
     }
 }

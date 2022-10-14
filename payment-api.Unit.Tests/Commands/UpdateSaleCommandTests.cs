@@ -64,6 +64,42 @@ namespace payment_api.Unit.Tests.Commands
         }
 
         [Test]
+        public async Task Dado_um_comando_invalido_sem_status_a_venda_nao_deve_ser_alterada()
+        {
+            // Arrange
+            var command = new UpdateSaleCommand()
+            {
+                Date = DateTime.Now,
+                Items = new List<ItemRequest>() {
+                    new ItemRequest
+                    {
+                        Name="ItemTeste",
+                        Price = 5,
+                        Quantity = 5
+                    },
+                },
+                Seller = new SellerRequest
+                {
+                    CPF = 123456,
+                    Name = "SellerTeste",
+                    Email = "teste@email.com",
+                    Phone = 12345
+                }
+            };
+            var sale = _mapper.Map<Sale>(command);
+            sale.Status = SaleStatus.AwaitingPayment;
+            _moqSaleRepository.Setup(s => s.GetById(It.IsAny<long>())).Returns(sale);
+            _moqSaleRepository.Setup(s => s.UpdateSaleById(It.IsAny<Sale>(), It.IsAny<Sale>())).Returns(sale);
+
+            // Act
+            var result = await GetCommand().Handle(command, default);
+
+            // Assert
+            result.IsSuccess.Should().BeFalse();
+            result.Error.Should().Be("O Status não pode ser 0 ou vazio");
+        }
+
+        [Test]
         [TestCaseSource(nameof(VendaNaoPodeSerAlterada))]
         public async Task Dado_um_comando_invalido_a_venda_nao_deve_ser_alterada_com_a_regra_de_alteracao_do_status(SaleStatus currentStatus,UpdateSaleCommand command)
         {
@@ -80,6 +116,7 @@ namespace payment_api.Unit.Tests.Commands
             result.IsSuccess.Should().BeFalse();
             result.Error.Should().Be("O Status não pode ser alterado");
         }
+
         [Test]
         [TestCaseSource(nameof(VendaPodeSerAlterada))]
         public async Task Dado_um_comando_valido_a_venda_deve_ser_alterada_com_a_regra_de_alteracao_do_status(SaleStatus currentStatus, UpdateSaleCommand command)
