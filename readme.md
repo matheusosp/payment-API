@@ -1,5 +1,5 @@
-## Running the Application Locally
-Para rodar a aplicação localmente, o dotnet 6.0 precisar estar instalado, e seguir com os seguintes comandos:
+## Rodando a AplicaÃ§Ã£o localmente
+Para rodar a aplicaï¿½ï¿½o localmente, o dotnet 6.0 precisar estar instalado, e seguir com os seguintes comandos:
 1. `cd payment-api`
 2. `dotnet run`
 
@@ -11,16 +11,16 @@ https://localhost:7256/api-docs/index.html
 ![](swagger.png)
 ![](Tests.png)
 
-### Arquitetura e Organização
+### Arquitetura e Organizaï¿½ï¿½o
 
 Para o desenvolvimento do sistema foi utilizada a arquitetura de camadas baseada no modelo Domain Driven Design da figura abaixo. 
 
 ![Arquitetura de Camadas](https://user-images.githubusercontent.com/42355371/74002848-3ba2f200-494f-11ea-9488-c3a22e4f53bd.jpg)
 
-Cada projeto representa uma camada. As responsabilidades de cada camada são:
+Cada projeto representa uma camada. As responsabilidades de cada camada sï¿½o:
 
-	- Apresentação: interação com o usuário (A apresentação não tem nesse projeto);
-	- Serviços Distribuidos: disponibiliza endpoints para serem utilizados pela camada de apresentação (Projeto PaymentAPI);
-	- Aplicação: gerencia os recursos da solução (Projeto PaymentAPI.Application);
-	- Domínio: contém os objetos e as regras de negócio (Projeto PaymentAPI.Domain);
-	- Infraestrutura: serviços externos e camada de acesso à dados (Projeto PaymentAPI.Infra.EF).
+	- Apresentaï¿½ï¿½o: interaï¿½ï¿½o com o usuï¿½rio (A apresentaï¿½ï¿½o nï¿½o tem nesse projeto);
+	- Serviï¿½os Distribuidos: disponibiliza endpoints para serem utilizados pela camada de apresentaï¿½ï¿½o (Projeto PaymentAPI);
+	- Aplicaï¿½ï¿½o: gerencia os recursos da soluï¿½ï¿½o (Projeto PaymentAPI.Application);
+	- Domï¿½nio: contï¿½m os objetos e as regras de negï¿½cio (Projeto PaymentAPI.Domain);
+	- Infraestrutura: serviï¿½os externos e camada de acesso ï¿½ dados (Projeto PaymentAPI.Infra.EF).
