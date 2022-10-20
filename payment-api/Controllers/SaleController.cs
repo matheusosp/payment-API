@@ -38,7 +38,7 @@ namespace payment_api.Controllers
         /// <summary>
         /// Operação que realiza o cadastro da venda
         /// </summary>
-        /// <param name="palavra">Um objeto de venda</param>
+        /// <param name="command">Um objeto de venda</param>
         /// <returns>Um objeto de venda com seu Id</returns>
         [HttpPost]
         public async Task<IActionResult> RegisterSale(RegisterSaleCommand command, CancellationToken cancellationToken)
@@ -54,7 +54,7 @@ namespace payment_api.Controllers
         /// Operação que realiza a substituição de dados de uma venda especifica.
         /// </summary>
         /// <param name="id">Código identificador da venda a ser alterada</param>
-        /// <param name="palavra">Objeto venda com dados para alteração</param>
+        /// <param name="command">Objeto venda com dados para alteração</param>
         /// <returns>Um objeto de venda com seu Id</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateById(long id, [FromBody] UpdateSaleCommand command, CancellationToken cancellationToken)

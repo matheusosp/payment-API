@@ -24,3 +24,8 @@ Cada projeto representa uma camada. As responsabilidades de cada camada sao:
 	- Aplicacao: gerencia os recursos da solucao (Projeto PaymentAPI.Application);
 	- Dominio: contem os objetos e as regras de negocio (Projeto PaymentAPI.Domain);
 	- Infraestrutura: servicos externos e camada de acesso a dados (Projeto PaymentAPI.Infra.EF).
+
+	### Deploy
+```
+https://paymentapi20221018172618.azurewebsites.net/api-docs/index.html
+```

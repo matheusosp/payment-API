@@ -1,11 +1,6 @@
-using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.PlatformAbstractions;
-using PaymentAPI.Application.Commands;
 using PaymentAPI.Application.Mapping;
-using PaymentAPI.Application.Queries;
-using PaymentAPI.Domain.Features;
 using PaymentAPI.Domain.Interfaces;
 using PaymentAPI.Infra.EF;
 using PaymentAPI.Infra.EF.Context;
@@ -13,56 +8,53 @@ using PaymentAPI.Infra.EF.Repositories;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
+var services = builder.Services;
 
-// Add services to the container.
-if (bool.Parse(builder.Configuration["UseInMemory"]))
+configuration
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", true, true);
+
+if (bool.Parse(configuration.GetSection("UseInMemory").Value))
 {
-    builder.Services.AddDbContext<ApplicationDbContext>(
+    services.AddDbContext<ApplicationDbContext>(
       (options) => options.UseInMemoryDatabase("PaymentAPI"));
 }
-else 
+else if (bool.Parse(configuration.GetSection("UseSqlite").Value))
 {
-    builder.Services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString")));
+    services.AddDbContext<ApplicationDbContext>(cfg =>
+    {
+        cfg.UseSqlite("Data Source=Database\\Sales.db");
+    });
+}
+else
+{
+    services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseSqlServer(configuration.GetConnectionString("ConnectionString")));
 }
 
+services.AddControllers();
+services.AddScoped<IUnitOfWork, UnitOfWork>();
+services.AddScoped(typeof(ISaleRepository), typeof(SaleRepository));
+services.AddMediatR(AppDomain.CurrentDomain.Load("PaymentAPI.Application"));
+services.AddAutoMapper(typeof(AutoMapperInitializer));
 
-builder.Services.AddControllers();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<ISaleRepository, SaleRepository>();
-builder.Services.AddMediatR(typeof(RegisterSaleCommandHandler));
-builder.Services.AddMediatR(typeof(UpdateSaleCommandHandler));
-builder.Services.AddMediatR(typeof(RetrieveSaleByIdQueryHandler));
-builder.Services.AddAutoMapper(typeof(AutoMapperInitializer));
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(cfg => {
-    var pathProject = PlatformServices.Default.Application.ApplicationBasePath; ;
-    var nameProject = $"{PlatformServices.Default.Application.ApplicationName}.xml";
-    var PathXmlFile = Path.Combine(pathProject, nameProject);
-
-    cfg.IncludeXmlComments(PathXmlFile);
+services.AddEndpointsApiExplorer();
+services.AddSwaggerGen(cfg => {
+    cfg.IncludeXmlComments(string.Format(@"{0}\PaymentAPI.xml", AppDomain.CurrentDomain.BaseDirectory));
 });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "PaymentAPI");
-        options.RoutePrefix = "api-docs";
-    });
-
-}
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "PaymentAPI");
+    options.RoutePrefix = "api-docs";
+});
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
