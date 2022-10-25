@@ -1,6 +1,9 @@
 using MediatR;
+
 using Microsoft.EntityFrameworkCore;
+using PaymentAPI.Application.Commands;
 using PaymentAPI.Application.Mapping;
+using PaymentAPI.Application.Queries;
 using PaymentAPI.Domain.Interfaces;
 using PaymentAPI.Infra.EF;
 using PaymentAPI.Infra.EF.Context;
@@ -36,7 +39,9 @@ else
 services.AddControllers();
 services.AddScoped<IUnitOfWork, UnitOfWork>();
 services.AddScoped(typeof(ISaleRepository), typeof(SaleRepository));
-services.AddMediatR(AppDomain.CurrentDomain.Load("PaymentAPI.Application"));
+services.AddMediatR(typeof(RegisterSaleCommandHandler));
+services.AddMediatR(typeof(UpdateSaleCommandHandler));
+services.AddMediatR(typeof(RetrieveSaleByIdQueryHandler));
 services.AddAutoMapper(typeof(AutoMapperInitializer));
 
 services.AddEndpointsApiExplorer();
