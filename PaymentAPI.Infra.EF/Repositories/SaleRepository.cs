@@ -22,7 +22,6 @@ namespace PaymentAPI.Infra.EF.Repositories
         public Sale Add(Sale sale)
         {
             Context.Sales.Add(sale);
-            Context.SaveChanges();
 
             return sale;
         }
@@ -38,7 +37,6 @@ namespace PaymentAPI.Infra.EF.Repositories
 
             Context.Sales.Update(sale);
 
-            Context.SaveChanges();
             return sale;
         }
     }
